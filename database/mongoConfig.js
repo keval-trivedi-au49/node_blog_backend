@@ -1,20 +1,22 @@
 const mongoose = require('mongoose');
 const { mongoUrl } = require('../configs/mainConfig');
 
-mongoose.connect(mongoUrl,
-    {
-        serverSelectionTimeoutMS: 30000,
-        socketTimeoutMS: 45000,
-        autoIndex: false
+const connectMongoDB = async () => {
+    try {
+        await mongoose.connect(mongoUrl, {
+            serverSelectionTimeoutMS: 30000,
+            socketTimeoutMS: 45000,
+            autoIndex: false
+        });
+
+        console.log('MongoDB :: Connection has been successfully.');
+    } catch (error) {
+        console.error('MongoDB :: Connection failed:', error);
+        throw error;
     }
-)
-    .then(() => {
-        console.log(`MongoDB :: Connection has been successfully.`);
-    })
-    .catch((e) => {
-        console.log(`CATCH ERROR MongoDB :: (connect) :: ${e}`);
-    });
+};
 
 module.exports = {
-    mongoose
+    mongoose,
+    connectMongoDB
 };
