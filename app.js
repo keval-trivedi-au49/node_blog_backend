@@ -10,6 +10,13 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+app.get('/health', (req, res) => {
+    res.status(200).json({
+        status: 'ok',
+        message: 'Blog backend is running'
+    });
+});
+
 app.use('/unAuth', unautRoutes);
 app.use('/auth', autRoutes);
 
